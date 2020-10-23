@@ -167,5 +167,12 @@ let onDidChangeActiveColorThemeDisposable = vscode.workspace.onDidChangeActiveCo
     else if (vscode.window.activeColorTheme.kind == 2) { squigglyBracketsColor[0] = "#d4d4aa"; }
     else { squigglyBracketsColor[0] = "#d4d4aa"; }
     deactivate();
+    for (const sub of context.subscriptions) {
+		try {
+			sub.dispose();
+		} catch (e) {
+			console.error(e);
+		}
+	}
     activate();
 });
