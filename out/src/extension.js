@@ -7,6 +7,11 @@ function activate(context) {
     var roundBracketsColor = ["#e6b422", "#c70067", "#00a960", "#fc7482"];
     var squareBracketsColor = ["#33ccff", "#8080ff", "#0073a8"];
     var squigglyBracketsColor = ["#d4d4aa", "#d1a075", "#9c6628"];
+    if (vscode.window.activeColorTheme.kind == 1) {
+        squigglyBracketsColor[0] = "#484c61";
+    } else if (vscode.window.activeColorTheme.kind == 2) {
+        squigglyBracketsColor[0] = "#d4d4aa";
+    }
     var roundBracketsDecorationTypes = [];
     var squareBracketsDecorationTypes = [];
     var squigglyBracketsDecorationTypes = [];
@@ -157,3 +162,10 @@ function deactivate() {
 }
 exports.deactivate = deactivate;
 //# sourceMappingURL=extension.js.map
+let onDidChangeActiveColorThemeDisposable = vscode.workspace.onDidChangeActiveColorTheme((e) => {
+    if (vscode.window.activeColorTheme.kind == 1) { squigglyBracketsColor[0] = "#484c61"; }
+    else if (vscode.window.activeColorTheme.kind == 2) { squigglyBracketsColor[0] = "#d4d4aa"; }
+    else { squigglyBracketsColor[0] = "#d4d4aa"; }
+    deactivate();
+    activate();
+});
